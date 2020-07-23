@@ -24,6 +24,19 @@ export default class Counter extends React.Component {
         console.log('--');
     }
 
+    // let's react know if renders should be triggered or not
+    shouldComponentUpdate(nextProps, nextState) {
+        // if the ignoreProp changes then don't update the component
+        if(nextProps.ignoreProp &&
+            this.props.ignoreProp !== nextProps.ignoreProp) {
+            console.log("shouldComponentUpdate() - Render ignored")
+            console.log('--');
+            return false;
+        }
+        console.log("shouldComponentUpdate() - Render NOT ignored")
+        return true;
+    }
+
     render () {
         // consoling the fact that we are getting a render
         console.log('Render');
@@ -42,6 +55,12 @@ export default class Counter extends React.Component {
     // called each time the component updates
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('componentDidUpdate()');
+        console.log('--');
+    }
+
+    // called each time the component unmounts
+    componentWillUnmount() {
+        console.log('componentWillUnmount()');
         console.log('--');
     }
 }
