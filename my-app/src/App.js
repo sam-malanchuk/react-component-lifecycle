@@ -9,7 +9,8 @@ class App extends React.Component {
     this.state = {
       mount: true,
       ignoreProp: 0,
-      seed: 35
+      seed: 35,
+      showErrorComponent: false
     }
 
     this.mountCounter = () => this.setState({mount: true});
@@ -17,18 +18,21 @@ class App extends React.Component {
 
     this.ignoreProp = () => this.setState({ignoreProp: Math.random()})
     this.seedGenerator = () => this.setState({seed: Number.parseInt(Math.random() * 100)})
+    this.toggleError = () => this.setState({showErrorComponent: !this.state.showErrorComponent})
   }
   render() {
-    const {mount, ignoreProp, seed} = this.state;
+    const {mount, ignoreProp, seed, showErrorComponent} = this.state;
     return <div>
       <button onClick={this.mountCounter} disabled={mount}>Mount</button>
       <button onClick={this.unmountCounter} disabled={!mount}>Unmount</button>
       <button onClick={this.ignoreProp}>Ignore Prop</button>
       <button onClick={this.seedGenerator}>Seed Generator</button>
+      <button onClick={this.showErrorComponent}>Toggle Error</button>
       {mount ?
         <Counter
           ignoreProp={ignoreProp}
           seed={seed}
+          showErrorComponent={showErrorComponent}
         /> :
         null}
     </div>

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// erorr component accessing a value that does not exist
+const ErrorComponent = () => <div></div>;
+
 export default class Counter extends React.Component {
     // get the props into the component
     constructor(props) {
@@ -48,9 +51,20 @@ export default class Counter extends React.Component {
         return true;
     }
 
+    // capture some properties before changing the state
+    // later to pass into componentDidUpdate()
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log("getSnapshotBeforeUpdate()")
+        return null;
+    }
+
     render () {
         // consoling the fact that we are getting a render
         console.log('Render');
+
+        if(this.props.showErrorComponent && this.state.error) {
+            return <div>We have encountered an error! {this.state.error.message}</div>
+        }
 
         return (
             <div>
@@ -73,5 +87,12 @@ export default class Counter extends React.Component {
     componentWillUnmount() {
         console.log('componentWillUnmount()');
         console.log('--');
+    }
+
+    // catches any errors you run into and allows you to handle them
+    componentDidCatch(error, info) {
+        console.log("componentDidCatch()");
+
+        this.setState({error, info});
     }
 }
