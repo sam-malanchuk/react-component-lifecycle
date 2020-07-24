@@ -18,6 +18,17 @@ export default class Counter extends React.Component {
         this.decrement = () => this.setState({counter: this.state.counter - 1});
     }
 
+    // allows you to transfer props to state
+    static getDerivedStateFromProps(props, state) {
+        if(props.seed && state.seed !== props.seed) {
+            return {
+                seed: props.seed,
+                counter: props.seed
+            }
+        }
+        return null;
+    }
+
     // called right after render
     componentDidMount() {
         console.log('componentDidMount()');
